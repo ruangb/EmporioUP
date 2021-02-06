@@ -1,0 +1,69 @@
+﻿@model IEnumerable<EmporioUP.Models.Venda>
+
+@{
+    ViewBag.Title = "Vendas";
+}
+<h1 class="text-center">Vendas</h1>
+<hr />
+<div class="text-center">
+    <button class="btn btn-info btn-sm" style="background-color:mediumpurple; color:white; border-color:mediumpurple" ;>
+        @Html.ActionLink("Nova venda", "NovaVenda", null, new { @style = "background-color:mediumpurple; color:white"})
+        <span class="glyphicon glyphicon-plus"></span>
+    </button>
+</div>
+<hr />
+<div id="list" class="row">
+    <table class="table table-bordered table-hover" cellspacing="0" cellpadding="0" id="myTable">
+        <thead>
+            <tr>
+                <th>Número da venda</th>
+                <th>Cliente</th>
+                <th>Produto</th>
+                <th>Total</th>
+                <th>Data da venda</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.id_venda)</td>
+                <td> @Html.DisplayFor(modelItem => item.Cliente.nome)</td>
+                <td> @Html.DisplayFor(modelItem => item.Produto.descricao)</td>
+                <td>@Html.DisplayFor(modelItem => item.total)</td>
+                <td>@Html.DisplayFor(modelItem => item.dt_venda)</td>
+                <td class="text-center">
+                    <button type="submit" class="btn btn-success" style="color:white;">
+                        @Html.ActionLink("Editar", "VendasEditar", new { id = item.id_venda }, new { @style = "color:#ffffff;" })
+                    </button>
+                    <button type="submit" class="btn btn-info" style="color:white;">
+                        @Html.ActionLink("Detalhes", "VendasDetalhes", new { id = item.id_venda }, new { @style = "color:#ffffff;" })
+                    </button>
+                    <button type="submit" class="btn btn-danger" style="color:white;">
+                        @Html.ActionLink("Deletar", "VendasDeletar", new { id = item.id_venda }, new { @style = "color:#ffffff;" })
+                    </button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section scripts{
+    <link rel="stylesheet" href="https://getbootstrap.com/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "language": {
+                    "lengthMenu": "Mostrando _MENU_ registros por página",
+                    "zeroRecords": "Nenhum Registro Encontrado",
+                    "info": "Mostrando Página _PAGE_ de _PAGES_",
+                    "infoEmpty": "Nenhum registro Disponível",
+                    "infoFiltered": "(filtrado de _MAX_ registro no total)"
+                }
+            });
+        });
+    </script>﻿}

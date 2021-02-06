@@ -1,0 +1,578 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="msdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Analise_Perfil">
+          <Key>
+            <PropertyRef Name="id_perfil" />
+          </Key>
+          <Property Name="id_perfil" Type="int" Nullable="false" />
+          <Property Name="perfil" Type="varchar" MaxLength="20" />
+          <Property Name="fk_id_resposta" Type="int" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="id_cliente" />
+          </Key>
+          <Property Name="id_cliente" Type="int" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="70" Nullable="false" />
+          <Property Name="cpf" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="dataAdesao" Type="datetime" Nullable="false" />
+          <Property Name="fk_id_perfil" Type="int" />
+        </EntityType>
+        <EntityType Name="Endereco">
+          <Key>
+            <PropertyRef Name="id_endereco" />
+          </Key>
+          <Property Name="id_endereco" Type="int" Nullable="false" />
+          <Property Name="cep" Type="char" MaxLength="8" />
+          <Property Name="uf" Type="char" MaxLength="2" />
+          <Property Name="cidade" Type="varchar" MaxLength="30" />
+          <Property Name="bairro" Type="varchar" MaxLength="30" />
+          <Property Name="logradouro" Type="varchar" MaxLength="30" />
+          <Property Name="numero" Type="varchar" MaxLength="10" />
+          <Property Name="complemento" Type="varchar" MaxLength="10" />
+          <Property Name="fk_cliente" Type="int" />
+        </EntityType>
+        <EntityType Name="Funcionario">
+          <Key>
+            <PropertyRef Name="id_funcionario" />
+          </Key>
+          <Property Name="id_funcionario" Type="int" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="40" />
+          <Property Name="senha" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Kit">
+          <Key>
+            <PropertyRef Name="id_kit" />
+          </Key>
+          <Property Name="id_kit" Type="int" Nullable="false" />
+          <Property Name="numero" Type="int" Nullable="false" />
+          <Property Name="kit" Type="varchar" MaxLength="20" />
+          <Property Name="valor" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="fk_perfil" Type="int" />
+          <Property Name="fk_produto" Type="int" />
+        </EntityType>
+        <EntityType Name="Pergunta">
+          <Key>
+            <PropertyRef Name="id_pergunta" />
+          </Key>
+          <Property Name="id_pergunta" Type="int" Nullable="false" />
+          <Property Name="pergunta" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Produto">
+          <Key>
+            <PropertyRef Name="id_produto" />
+          </Key>
+          <Property Name="id_produto" Type="int" Nullable="false" />
+          <Property Name="descricao" Type="varchar" MaxLength="70" Nullable="false" />
+          <Property Name="valor" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="info" Type="varchar" MaxLength="250" />
+          <Property Name="categoria" Type="varchar" MaxLength="30" />
+          <Property Name="img" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Resposta">
+          <Key>
+            <PropertyRef Name="id_resposta" />
+          </Key>
+          <Property Name="id_resposta" Type="int" Nullable="false" />
+          <Property Name="resposta" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="fk_id_pergunta" Type="int" />
+        </EntityType>
+        <EntityType Name="Venda">
+          <Key>
+            <PropertyRef Name="id_venda" />
+          </Key>
+          <Property Name="id_venda" Type="int" Nullable="false" />
+          <Property Name="fk_id_cliente" Type="int" />
+          <Property Name="fk_id_produto" Type="int" />
+          <Property Name="qtde" Type="int" Nullable="false" />
+          <Property Name="total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="dt_venda" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Endereco" Type="Self.Endereco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id_cliente" />
+            </Principal>
+            <Dependent Role="Endereco">
+              <PropertyRef Name="fk_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_id_cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Venda" Type="Self.Venda" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id_cliente" />
+            </Principal>
+            <Dependent Role="Venda">
+              <PropertyRef Name="fk_id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_id_pergunta">
+          <End Role="Pergunta" Type="Self.Pergunta" Multiplicity="0..1" />
+          <End Role="Resposta" Type="Self.Resposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pergunta">
+              <PropertyRef Name="id_pergunta" />
+            </Principal>
+            <Dependent Role="Resposta">
+              <PropertyRef Name="fk_id_pergunta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_id_produto">
+          <End Role="Produto" Type="Self.Produto" Multiplicity="0..1" />
+          <End Role="Venda" Type="Self.Venda" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produto">
+              <PropertyRef Name="id_produto" />
+            </Principal>
+            <Dependent Role="Venda">
+              <PropertyRef Name="fk_id_produto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_id_resposta">
+          <End Role="Resposta" Type="Self.Resposta" Multiplicity="0..1" />
+          <End Role="Analise_Perfil" Type="Self.Analise_Perfil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resposta">
+              <PropertyRef Name="id_resposta" />
+            </Principal>
+            <Dependent Role="Analise_Perfil">
+              <PropertyRef Name="fk_id_resposta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_perfil">
+          <End Role="Analise_Perfil" Type="Self.Analise_Perfil" Multiplicity="0..1" />
+          <End Role="Kit" Type="Self.Kit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Analise_Perfil">
+              <PropertyRef Name="id_perfil" />
+            </Principal>
+            <Dependent Role="Kit">
+              <PropertyRef Name="fk_perfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_produto">
+          <End Role="Produto" Type="Self.Produto" Multiplicity="0..1" />
+          <End Role="Kit" Type="Self.Kit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produto">
+              <PropertyRef Name="id_produto" />
+            </Principal>
+            <Dependent Role="Kit">
+              <PropertyRef Name="fk_produto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="msdbModelStoreContainer">
+          <EntitySet Name="Analise_Perfil" EntityType="Self.Analise_Perfil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Endereco" EntityType="Self.Endereco" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Funcionario" EntityType="Self.Funcionario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kit" EntityType="Self.Kit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pergunta" EntityType="Self.Pergunta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Produto" EntityType="Self.Produto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Resposta" EntityType="Self.Resposta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Venda" EntityType="Self.Venda" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_cliente" Association="Self.fk_cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Endereco" EntitySet="Endereco" />
+          </AssociationSet>
+          <AssociationSet Name="fk_id_cliente" Association="Self.fk_id_cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Venda" EntitySet="Venda" />
+          </AssociationSet>
+          <AssociationSet Name="fk_id_pergunta" Association="Self.fk_id_pergunta">
+            <End Role="Pergunta" EntitySet="Pergunta" />
+            <End Role="Resposta" EntitySet="Resposta" />
+          </AssociationSet>
+          <AssociationSet Name="fk_id_produto" Association="Self.fk_id_produto">
+            <End Role="Produto" EntitySet="Produto" />
+            <End Role="Venda" EntitySet="Venda" />
+          </AssociationSet>
+          <AssociationSet Name="fk_id_resposta" Association="Self.fk_id_resposta">
+            <End Role="Resposta" EntitySet="Resposta" />
+            <End Role="Analise_Perfil" EntitySet="Analise_Perfil" />
+          </AssociationSet>
+          <AssociationSet Name="fk_perfil" Association="Self.fk_perfil">
+            <End Role="Analise_Perfil" EntitySet="Analise_Perfil" />
+            <End Role="Kit" EntitySet="Kit" />
+          </AssociationSet>
+          <AssociationSet Name="fk_produto" Association="Self.fk_produto">
+            <End Role="Produto" EntitySet="Produto" />
+            <End Role="Kit" EntitySet="Kit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="msdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Analise_Perfil">
+          <Key>
+            <PropertyRef Name="id_perfil" />
+          </Key>
+          <Property Name="id_perfil" Type="Int32" Nullable="false" />
+          <Property Name="perfil" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="fk_id_resposta" Type="Int32" />
+          <NavigationProperty Name="Resposta" Relationship="Self.fk_id_resposta" FromRole="Analise_Perfil" ToRole="Resposta" />
+          <NavigationProperty Name="Kit" Relationship="Self.fk_perfil" FromRole="Analise_Perfil" ToRole="Kit" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="id_cliente" />
+          </Key>
+          <Property Name="id_cliente" Type="Int32" Nullable="false" />
+          <Property Name="nome" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cpf" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dataAdesao" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fk_id_perfil" Type="Int32" />
+          <NavigationProperty Name="Endereco" Relationship="Self.fk_cliente" FromRole="Cliente" ToRole="Endereco" />
+          <NavigationProperty Name="Venda" Relationship="Self.fk_id_cliente" FromRole="Cliente" ToRole="Venda" />
+        </EntityType>
+        <EntityType Name="Endereco">
+          <Key>
+            <PropertyRef Name="id_endereco" />
+          </Key>
+          <Property Name="id_endereco" Type="Int32" Nullable="false" />
+          <Property Name="cep" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="uf" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="cidade" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="bairro" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="logradouro" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="numero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="complemento" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="fk_cliente" Type="Int32" />
+          <NavigationProperty Name="Cliente" Relationship="Self.fk_cliente" FromRole="Endereco" ToRole="Cliente" />
+        </EntityType>
+        <EntityType Name="Funcionario">
+          <Key>
+            <PropertyRef Name="id_funcionario" />
+          </Key>
+          <Property Name="id_funcionario" Type="Int32" Nullable="false" />
+          <Property Name="nome" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="senha" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Kit">
+          <Key>
+            <PropertyRef Name="id_kit" />
+          </Key>
+          <Property Name="id_kit" Type="Int32" Nullable="false" />
+          <Property Name="numero" Type="Int32" Nullable="false" />
+          <Property Name="kit1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="valor" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="fk_perfil" Type="Int32" />
+          <Property Name="fk_produto" Type="Int32" />
+          <NavigationProperty Name="Analise_Perfil" Relationship="Self.fk_perfil" FromRole="Kit" ToRole="Analise_Perfil" />
+          <NavigationProperty Name="Produto" Relationship="Self.fk_produto" FromRole="Kit" ToRole="Produto" />
+        </EntityType>
+        <EntityType Name="Pergunta">
+          <Key>
+            <PropertyRef Name="id_pergunta" />
+          </Key>
+          <Property Name="id_pergunta" Type="Int32" Nullable="false" />
+          <Property Name="pergunta1" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Resposta" Relationship="Self.fk_id_pergunta" FromRole="Pergunta" ToRole="Resposta" />
+        </EntityType>
+        <EntityType Name="Produto">
+          <Key>
+            <PropertyRef Name="id_produto" />
+          </Key>
+          <Property Name="id_produto" Type="Int32" Nullable="false" />
+          <Property Name="descricao" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="valor" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="info" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="categoria" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="img" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Kit" Relationship="Self.fk_produto" FromRole="Produto" ToRole="Kit" />
+          <NavigationProperty Name="Venda" Relationship="Self.fk_id_produto" FromRole="Produto" ToRole="Venda" />
+        </EntityType>
+        <EntityType Name="Resposta">
+          <Key>
+            <PropertyRef Name="id_resposta" />
+          </Key>
+          <Property Name="id_resposta" Type="Int32" Nullable="false" />
+          <Property Name="resposta1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fk_id_pergunta" Type="Int32" />
+          <NavigationProperty Name="Analise_Perfil" Relationship="Self.fk_id_resposta" FromRole="Resposta" ToRole="Analise_Perfil" />
+          <NavigationProperty Name="Pergunta" Relationship="Self.fk_id_pergunta" FromRole="Resposta" ToRole="Pergunta" />
+        </EntityType>
+        <EntityType Name="Venda">
+          <Key>
+            <PropertyRef Name="id_venda" />
+          </Key>
+          <Property Name="id_venda" Type="Int32" Nullable="false" />
+          <Property Name="fk_id_cliente" Type="Int32" />
+          <Property Name="fk_id_produto" Type="Int32" />
+          <Property Name="qtde" Type="Int32" Nullable="false" />
+          <Property Name="total" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="dt_venda" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Cliente" Relationship="Self.fk_id_cliente" FromRole="Venda" ToRole="Cliente" />
+          <NavigationProperty Name="Produto" Relationship="Self.fk_id_produto" FromRole="Venda" ToRole="Produto" />
+        </EntityType>
+        <Association Name="fk_id_resposta">
+          <End Role="Resposta" Type="Self.Resposta" Multiplicity="0..1" />
+          <End Role="Analise_Perfil" Type="Self.Analise_Perfil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resposta">
+              <PropertyRef Name="id_resposta" />
+            </Principal>
+            <Dependent Role="Analise_Perfil">
+              <PropertyRef Name="fk_id_resposta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_perfil">
+          <End Role="Analise_Perfil" Type="Self.Analise_Perfil" Multiplicity="0..1" />
+          <End Role="Kit" Type="Self.Kit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Analise_Perfil">
+              <PropertyRef Name="id_perfil" />
+            </Principal>
+            <Dependent Role="Kit">
+              <PropertyRef Name="fk_perfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Endereco" Type="Self.Endereco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id_cliente" />
+            </Principal>
+            <Dependent Role="Endereco">
+              <PropertyRef Name="fk_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_id_cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Venda" Type="Self.Venda" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id_cliente" />
+            </Principal>
+            <Dependent Role="Venda">
+              <PropertyRef Name="fk_id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_produto">
+          <End Role="Produto" Type="Self.Produto" Multiplicity="0..1" />
+          <End Role="Kit" Type="Self.Kit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produto">
+              <PropertyRef Name="id_produto" />
+            </Principal>
+            <Dependent Role="Kit">
+              <PropertyRef Name="fk_produto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_id_pergunta">
+          <End Role="Pergunta" Type="Self.Pergunta" Multiplicity="0..1" />
+          <End Role="Resposta" Type="Self.Resposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pergunta">
+              <PropertyRef Name="id_pergunta" />
+            </Principal>
+            <Dependent Role="Resposta">
+              <PropertyRef Name="fk_id_pergunta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_id_produto">
+          <End Role="Produto" Type="Self.Produto" Multiplicity="0..1" />
+          <End Role="Venda" Type="Self.Venda" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produto">
+              <PropertyRef Name="id_produto" />
+            </Principal>
+            <Dependent Role="Venda">
+              <PropertyRef Name="fk_id_produto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="msdbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Analise_Perfil" EntityType="Self.Analise_Perfil" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Endereco" EntityType="Self.Endereco" />
+          <EntitySet Name="Funcionario" EntityType="Self.Funcionario" />
+          <EntitySet Name="Kit" EntityType="Self.Kit" />
+          <EntitySet Name="Pergunta" EntityType="Self.Pergunta" />
+          <EntitySet Name="Produto" EntityType="Self.Produto" />
+          <EntitySet Name="Resposta" EntityType="Self.Resposta" />
+          <EntitySet Name="Venda" EntityType="Self.Venda" />
+          <AssociationSet Name="fk_id_resposta" Association="Self.fk_id_resposta">
+            <End Role="Resposta" EntitySet="Resposta" />
+            <End Role="Analise_Perfil" EntitySet="Analise_Perfil" />
+          </AssociationSet>
+          <AssociationSet Name="fk_perfil" Association="Self.fk_perfil">
+            <End Role="Analise_Perfil" EntitySet="Analise_Perfil" />
+            <End Role="Kit" EntitySet="Kit" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cliente" Association="Self.fk_cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Endereco" EntitySet="Endereco" />
+          </AssociationSet>
+          <AssociationSet Name="fk_id_cliente" Association="Self.fk_id_cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Venda" EntitySet="Venda" />
+          </AssociationSet>
+          <AssociationSet Name="fk_produto" Association="Self.fk_produto">
+            <End Role="Produto" EntitySet="Produto" />
+            <End Role="Kit" EntitySet="Kit" />
+          </AssociationSet>
+          <AssociationSet Name="fk_id_pergunta" Association="Self.fk_id_pergunta">
+            <End Role="Pergunta" EntitySet="Pergunta" />
+            <End Role="Resposta" EntitySet="Resposta" />
+          </AssociationSet>
+          <AssociationSet Name="fk_id_produto" Association="Self.fk_id_produto">
+            <End Role="Produto" EntitySet="Produto" />
+            <End Role="Venda" EntitySet="Venda" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="msdbModelStoreContainer" CdmEntityContainer="msdbEntities">
+          <EntitySetMapping Name="Analise_Perfil">
+            <EntityTypeMapping TypeName="msdbModel.Analise_Perfil">
+              <MappingFragment StoreEntitySet="Analise_Perfil">
+                <ScalarProperty Name="id_perfil" ColumnName="id_perfil" />
+                <ScalarProperty Name="perfil" ColumnName="perfil" />
+                <ScalarProperty Name="fk_id_resposta" ColumnName="fk_id_resposta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="msdbModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="cpf" ColumnName="cpf" />
+                <ScalarProperty Name="dataAdesao" ColumnName="dataAdesao" />
+                <ScalarProperty Name="fk_id_perfil" ColumnName="fk_id_perfil" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Endereco">
+            <EntityTypeMapping TypeName="msdbModel.Endereco">
+              <MappingFragment StoreEntitySet="Endereco">
+                <ScalarProperty Name="id_endereco" ColumnName="id_endereco" />
+                <ScalarProperty Name="cep" ColumnName="cep" />
+                <ScalarProperty Name="uf" ColumnName="uf" />
+                <ScalarProperty Name="cidade" ColumnName="cidade" />
+                <ScalarProperty Name="bairro" ColumnName="bairro" />
+                <ScalarProperty Name="logradouro" ColumnName="logradouro" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="complemento" ColumnName="complemento" />
+                <ScalarProperty Name="fk_cliente" ColumnName="fk_cliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Funcionario">
+            <EntityTypeMapping TypeName="msdbModel.Funcionario">
+              <MappingFragment StoreEntitySet="Funcionario">
+                <ScalarProperty Name="id_funcionario" ColumnName="id_funcionario" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="senha" ColumnName="senha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kit">
+            <EntityTypeMapping TypeName="msdbModel.Kit">
+              <MappingFragment StoreEntitySet="Kit">
+                <ScalarProperty Name="id_kit" ColumnName="id_kit" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="kit1" ColumnName="kit" />
+                <ScalarProperty Name="valor" ColumnName="valor" />
+                <ScalarProperty Name="fk_perfil" ColumnName="fk_perfil" />
+                <ScalarProperty Name="fk_produto" ColumnName="fk_produto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pergunta">
+            <EntityTypeMapping TypeName="msdbModel.Pergunta">
+              <MappingFragment StoreEntitySet="Pergunta">
+                <ScalarProperty Name="id_pergunta" ColumnName="id_pergunta" />
+                <ScalarProperty Name="pergunta1" ColumnName="pergunta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Produto">
+            <EntityTypeMapping TypeName="msdbModel.Produto">
+              <MappingFragment StoreEntitySet="Produto">
+                <ScalarProperty Name="id_produto" ColumnName="id_produto" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="valor" ColumnName="valor" />
+                <ScalarProperty Name="info" ColumnName="info" />
+                <ScalarProperty Name="categoria" ColumnName="categoria" />
+                <ScalarProperty Name="img" ColumnName="img" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Resposta">
+            <EntityTypeMapping TypeName="msdbModel.Resposta">
+              <MappingFragment StoreEntitySet="Resposta">
+                <ScalarProperty Name="id_resposta" ColumnName="id_resposta" />
+                <ScalarProperty Name="resposta1" ColumnName="resposta" />
+                <ScalarProperty Name="fk_id_pergunta" ColumnName="fk_id_pergunta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Venda">
+            <EntityTypeMapping TypeName="msdbModel.Venda">
+              <MappingFragment StoreEntitySet="Venda">
+                <ScalarProperty Name="id_venda" ColumnName="id_venda" />
+                <ScalarProperty Name="fk_id_cliente" ColumnName="fk_id_cliente" />
+                <ScalarProperty Name="fk_id_produto" ColumnName="fk_id_produto" />
+                <ScalarProperty Name="qtde" ColumnName="qtde" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="dt_venda" ColumnName="dt_venda" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

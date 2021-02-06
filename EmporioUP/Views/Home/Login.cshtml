@@ -1,0 +1,70 @@
+﻿@model EmporioUP.Models.Funcionario
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Meu Aplicativo ASP.NET</title>
+    <link rel="stylesheet" href="https://getbootstrap.com/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body background="~/Content/Imagens/emporio1.jpg" style="background-repeat: no-repeat; background-size: 100% 100%;">
+    <h2 style="color:#ffffff; text-align:center;">Empório UP</h2>
+    <br />
+    @using (Html.BeginForm(new { @class = "form-horizontal" }))
+    {<table width="100%">
+            <tr>
+                <td align="center">
+                    <table class="table-condensed">
+                        <h3 style="color:#ffffff">Login</h3>
+                        <tr>
+                            <td align="left">
+                                @Html.Label("Login", new { @style = "color: #ffffff" })
+                            </td>
+                            <td align="right">
+                                @Html.TextBoxFor(m => m.nome, new { @class = "form-control", placeholder = "Login" })
+                                &nbsp;&nbsp;
+                                <br />
+                                @Html.ValidationMessageFor(m => m.nome)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="left">
+                                @Html.Label("Senha", new { @style = "color: #ffffff" })
+                            </td>
+                            <td align="right">
+                                @Html.PasswordFor(m => m.senha, new { @class = "form-control", placeholder = "Senha" })
+                                &nbsp;&nbsp;
+                                <br />
+                                @Html.ValidationMessageFor(m => m.senha)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center">
+                                <input type="submit" value="Login" class="btn btn-primary" />
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+                    <p style="color:#ffffff">@ViewBag.ErrorMessage</p>
+                </td>
+            </tr>
+        </table>
+    }
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>
+

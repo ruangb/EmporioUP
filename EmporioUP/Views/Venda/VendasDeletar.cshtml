@@ -1,0 +1,76 @@
+﻿@model EmporioUP.Models.Venda
+
+@{
+    ViewBag.Title = "VendasDeletar";
+}
+
+<h2>Excluir venda</h2>
+
+<form class="form-horizontal" role="form" method="post" action="/Venda/Venda_Deleta">
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.HiddenFor(model => model.id_venda)
+                @Html.DisplayNameFor(model => model.id_venda)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.id_venda)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Cliente.nome)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Cliente.nome)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Produto.descricao)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Produto.descricao)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.qtde)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.qtde)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.total)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.total)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.dt_venda)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.dt_venda)
+            </dd>
+            <br />
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Deseja excluir a venda?')">Deletar</button>
+                </div>
+            </div>
+
+        </dl>
+    </div>
+</form>
+<button type="submit" class="btn btn-default" style="border-color:steelblue;">
+    <i class="glyphicon glyphicon-chevron-left" style="color:steelblue;"></i>
+    @Html.ActionLink("Voltar à lista de vendas", "Vendas")
+</button>
+@section scripts{
+    <link rel="stylesheet" href="https://getbootstrap.com/dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+}

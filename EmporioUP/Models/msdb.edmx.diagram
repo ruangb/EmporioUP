@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="156926133f514a32bc8ebb2c29465d99" Name="Diagram1" ZoomLevel="87">
+        <EntityTypeShape EntityType="msdbModel.Analise_Perfil" Width="1.5" PointX="10" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="msdbModel.Cliente" Width="1.5" PointX="3.125" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="msdbModel.Endereco" Width="1.5" PointX="2.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="msdbModel.Funcionario" Width="1.5" PointX="7.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="msdbModel.Kit" Width="1.5" PointX="7.875" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="msdbModel.Pergunta" Width="1.5" PointX="10.125" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="msdbModel.Produto" Width="1.5" PointX="5.25" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="msdbModel.Resposta" Width="1.5" PointX="12.125" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="msdbModel.Venda" Width="1.5" PointX="5.5" PointY="4.125" IsExpanded="true" />
+        <AssociationConnector Association="msdbModel.fk_id_resposta" ManuallyRouted="false" />
+        <AssociationConnector Association="msdbModel.fk_perfil" ManuallyRouted="false" />
+        <AssociationConnector Association="msdbModel.fk_cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="msdbModel.fk_id_cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="msdbModel.fk_produto" ManuallyRouted="false" />
+        <AssociationConnector Association="msdbModel.fk_id_pergunta" ManuallyRouted="false" />
+        <AssociationConnector Association="msdbModel.fk_id_produto" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

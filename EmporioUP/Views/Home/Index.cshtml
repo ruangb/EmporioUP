@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <img class="card-img-top" src="~/Content/Imagens/vendas.png" alt="Imagem de capa do card">
+                    <div class="card-body">
+                        <h4 class="card-title"><b>Vendas</b></h4>
+                        <p class="card-text">Clique para ir para visualizar as vendas ou para lançar uma nova venda.</p>
+                        <button type="submit" class="btn btn-success" style="color:white;">
+                            <a style="color:#ffffff" href="@Url.Action("Vendas", "Venda")">Ir até lá</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <img class="card-img-top" src="~/Content/Imagens/wine1.png" alt="Imagem de capa do card">
+                    <div class="card-body">
+                        <h4 class="card-title"><b>Produtos</b></h4>
+                        <p class="card-text">Clique para ir para visualizar a lista de produtos ou para cadastrar um novo produto.</p>
+                        <button type="submit" class="btn btn-success" style="color:white;">
+                            <a style="color:#ffffff" href="@Url.Action("Produtos", "Produto")">Ir até lá</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <img class="card-img-top" src="~/Content/Imagens/clie.gif" alt="Imagem de capa do card">
+                    <div class="card-body">
+                        <h4 class="card-title"><b>Clientes</b></h4>
+                        <p class="card-text">Clique para ir para visualizar a lista de clientes ou para cadastrar um novo cliente.</p>
+                        <button type="submit" class="btn btn-success" style="color:white;">
+                            <a style="color:#ffffff" href="@Url.Action("Clientes", "Cliente")">Ir até lá</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <img class="card-img-top" src="~/Content/Imagens/func.png" alt="Imagem de capa do card">
+                    <div class="card-body">
+                        <h4 class="card-title"><b>Funcionários</b></h4>
+                        <p class="card-text">Clique para ir para visualizar a lista de clientes ou para cadastrar um novo cliente.</p>
+                        <button type="submit" class="btn btn-success" style="color:white;">
+                            <a style="color:#ffffff" href="@Url.Action("Funcionarios", "Funcionario")">Ir até lá</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

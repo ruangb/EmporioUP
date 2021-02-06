@@ -1,0 +1,130 @@
+﻿@model IEnumerable<EmporioUP.Models.Funcionario>
+
+@{
+    ViewBag.Title = "Funcionarios";
+}
+<h1 class="text-center">Funcionários </h1>
+<hr />
+<div class="text-center">
+    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#atualiza_funcionario"
+            style="background-color:mediumpurple; color:white; border-color:mediumpurple";>
+        Novo funcionário&nbsp;
+        <span class="glyphicon glyphicon-plus"></span>
+    </button>
+</div>
+<hr />
+<!-- Modal -->
+<div class="modal fade" id="atualiza_funcionario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Cadastrar funcionário
+                </h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+
+                <form class="form-horizontal" role="form" method="post" action="/Funcionario/Funcionario_Atualiza">
+                    <input type="hidden" class="form-control" name="id_funcionario" id="id_funcionario" placeholder="Número" value="0" />
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"
+                               for="nome">Nome</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"
+                               for="email">E-mail</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="E-mail" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"
+                               for="senha">Senha</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" name="senha" id="senha" placeholder="Senha" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn"
+                        data-dismiss="modal" style="background-color:dimgray; color:white;">
+                    Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--modal-->
+
+<div id="list" class="row">
+    <table class="table table-bordered table-hover" cellspacing="0" cellpadding="0" id="myTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Funcionário</th>
+                <th>Email</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.id_funcionario)</td>
+                    <td> @Html.DisplayFor(modelItem => item.nome)</td>
+                    <td> @Html.DisplayFor(modelItem => item.email)</td>
+                    <td class="text-center">
+                        <button type="submit" class="btn btn-success" style="color:white;">
+                            @Html.ActionLink("Editar", "FuncionariosEditar", new { id = item.id_funcionario }, new { @style = "color:#ffffff;" })
+                        </button>
+                        <button type="submit" class="btn btn-info" style="color:white;">
+                            @Html.ActionLink("Detalhes", "FuncionariosDetalhes", new { id = item.id_funcionario }, new { @style = "color:#ffffff;" })
+                        </button>
+                        <button type="submit" class="btn btn-danger" style="color:white;">
+                            @Html.ActionLink("Deletar", "FuncionariosDeletar", new { id = item.id_funcionario }, new { @style = "color:#ffffff;" })
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section scripts{
+    <link rel="stylesheet" href="https://getbootstrap.com/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "language": {
+                    "lengthMenu": "Mostrando _MENU_ registros por página",
+                    "zeroRecords": "Nenhum Registro Encontrado",
+                    "info": "Mostrando Página _PAGE_ de _PAGES_",
+                    "infoEmpty": "Nenhum registro Disponível",
+                    "infoFiltered": "(filtrado de _MAX_ registro no total)"
+                }
+            });
+        });
+    </script>﻿}
+
+
